@@ -1,8 +1,8 @@
 [package]
-name = "vector_math_first_lib"
+name = "linear_algebra"
 version = "0.1.0"
 edition = "2021"
-description = "A library for vector math"
+description = "A library for basic linear algebra operations in Rust"
 license = "MIT"
 
 [dependencies]
