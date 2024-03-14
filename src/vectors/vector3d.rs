@@ -60,6 +60,15 @@ impl Vector3D {
             _ => panic!("Invalid index"),
         }
     }
+
+    /// Returns the vector multiplied by a scalar.
+    pub fn times(&self, scalar: f64) -> Vector3D {
+        Vector3D {
+            x: self.x * scalar,
+            y: self.y * scalar,
+            z: self.z * scalar,
+        }
+    }
 }
 
 #[cfg(test)]
@@ -123,5 +132,14 @@ mod tests {
         assert_eq!(vector.element(0), 1.0);
         assert_eq!(vector.element(1), 2.0);
         assert_eq!(vector.element(2), 3.0);
+    }
+
+    #[test]
+    fn test_times() {
+        let vector = Vector3D::new(1.0, 2.0, 3.0);
+        let result = vector.times(2.0);
+        assert_eq!(result.x, 2.0);
+        assert_eq!(result.y, 4.0);
+        assert_eq!(result.z, 6.0);
     }
 }

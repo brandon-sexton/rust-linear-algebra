@@ -63,6 +63,36 @@ impl Matrix3x3 {
             self.row(2).minus(&other.row(2)),
         )
     }
+
+    /// Returns the product of this matrix and a scalar.
+    pub fn times_scalar(&self, scalar: f64) -> Matrix3x3 {
+        Matrix3x3::new(
+            self.row(0).times(scalar),
+            self.row(1).times(scalar),
+            self.row(2).times(scalar),
+        )
+    }
+
+    /// Returns the product of this matrix and another 3x3 matrix.
+    pub fn times_matrix3x3(&self, other: &Matrix3x3) -> Matrix3x3 {
+        let row1 = Vector3D::new(
+            self.row(0).dot(&other.column(0)),
+            self.row(0).dot(&other.column(1)),
+            self.row(0).dot(&other.column(2)),
+        );
+        let row2 = Vector3D::new(
+            self.row(1).dot(&other.column(0)),
+            self.row(1).dot(&other.column(1)),
+            self.row(1).dot(&other.column(2)),
+        );
+        let row3 = Vector3D::new(
+            self.row(2).dot(&other.column(0)),
+            self.row(2).dot(&other.column(1)),
+            self.row(2).dot(&other.column(2)),
+        );
+
+        Matrix3x3::new(row1, row2, row3)
+    }
 }
 
 #[cfg(test)]
@@ -160,5 +190,42 @@ mod tests {
         );
 
         assert_eq!(matrix1.minus(&matrix2), expected);
+    }
+
+    #[test]
+    fn test_times_scalar() {
+        let row1 = Vector3D::new(1.0, 2.0, 3.0);
+        let row2 = Vector3D::new(4.0, 5.0, 6.0);
+        let row3 = Vector3D::new(7.0, 8.0, 9.0);
+        let matrix = Matrix3x3::new(row1, row2, row3);
+
+        let expected = Matrix3x3::new(
+            Vector3D::new(2.0, 4.0, 6.0),
+            Vector3D::new(8.0, 10.0, 12.0),
+            Vector3D::new(14.0, 16.0, 18.0),
+        );
+
+        assert_eq!(matrix.times_scalar(2.0), expected);
+    }
+
+    #[test]
+    fn test_times_matrix3x3() {
+        let row1 = Vector3D::new(1.0, 2.0, 3.0);
+        let row2 = Vector3D::new(4.0, 5.0, 6.0);
+        let row3 = Vector3D::new(7.0, 8.0, 9.0);
+        let matrix1 = Matrix3x3::new(row1, row2, row3);
+
+        let row4 = Vector3D::new(10.0, 11.0, 12.0);
+        let row5 = Vector3D::new(13.0, 14.0, 15.0);
+        let row6 = Vector3D::new(16.0, 17.0, 18.0);
+        let matrix2 = Matrix3x3::new(row4, row5, row6);
+
+        let expected = Matrix3x3::new(
+            Vector3D::new(84.0, 90.0, 96.0),
+            Vector3D::new(201.0, 216.0, 231.0),
+            Vector3D::new(318.0, 342.0, 366.0),
+        );
+
+        assert_eq!(matrix1.times_matrix3x3(&matrix2), expected);
     }
 }
