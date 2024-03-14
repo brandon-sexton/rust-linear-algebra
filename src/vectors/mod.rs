@@ -1,1 +1,1 @@
-pub mod vector_3d;
+pub mod vector3d;
