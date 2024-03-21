@@ -1,124 +1,64 @@
-use std::vec;
-
-pub fn add(vector1: &Vec<f64>, vector2: &Vec<f64>) -> Vec<f64> {
-    match vector1.len() {
-        2 => _add_2d(vector1, vector2),
-        3 => _add_3d(vector1, vector2),
-        _ => panic!("Not implemented"),
+pub fn add(a: Vec<f64>, b: Vec<f64>) -> Vec<f64> {
+    let mut result: Vec<f64> = Vec::new();
+    for i in 0..a.len() {
+        result.push(a[i] + b[i]);
     }
+    result
 }
 
-pub fn subtract(vector1: &Vec<f64>, vector2: &Vec<f64>) -> Vec<f64> {
-    match vector1.len() {
-        2 => _subtract_2d(vector1, vector2),
-        3 => _subtract_3d(vector1, vector2),
-        _ => panic!("Not implemented"),
+pub fn subtract(a: Vec<f64>, b: Vec<f64>) -> Vec<f64> {
+    let mut result: Vec<f64> = Vec::new();
+    for i in 0..a.len() {
+        result.push(a[i] - b[i]);
     }
+    result
 }
 
-pub fn cross(vector1: &Vec<f64>, vector2: &Vec<f64>) -> Vec<f64> {
-    match vector1.len() {
-        3 => _cross_3d(vector1, vector2),
-        _ => panic!("Not implemented"),
+pub fn dot(a: Vec<f64>, b: Vec<f64>) -> f64 {
+    let mut result: f64 = 0.0;
+    for i in 0..a.len() {
+        result += a[i] * b[i];
     }
+    result
 }
 
-pub fn dot(vector1: &Vec<f64>, vector2: &Vec<f64>) -> f64 {
-    match vector1.len() {
-        2 => _dot_2d(vector1, vector2),
-        3 => _dot_3d(vector1, vector2),
-        _ => panic!("Not implemented"),
+pub fn scale(a: Vec<f64>, b: f64) -> Vec<f64> {
+    let mut result: Vec<f64> = Vec::new();
+    for i in 0..a.len() {
+        result.push(a[i] * b);
     }
+    result
 }
 
-pub fn scale(vector: &Vec<f64>, scalar: f64) -> Vec<f64> {
-    match vector.len() {
-        2 => _scale_2d(vector, scalar),
-        3 => _scale_3d(vector, scalar),
-        _ => panic!("Not implemented"),
+pub fn cross(a: Vec<f64>, b: Vec<f64>) -> Vec<f64> {
+    let mut result: Vec<f64> = Vec::new();
+    result.push(a[1] * b[2] - a[2] * b[1]);
+    result.push(a[2] * b[0] - a[0] * b[2]);
+    result.push(a[0] * b[1] - a[1] * b[0]);
+    result
+}
+
+pub fn magnitude(a: Vec<f64>) -> f64 {
+    let mut result: f64 = 0.0;
+    for i in 0..a.len() {
+        result += a[i] * a[i];
     }
+    result.sqrt()
 }
 
-pub fn magnitude(vector: &Vec<f64>) -> f64 {
-    match vector.len() {
-        2 => _magnitude_2d(vector),
-        3 => _magnitude_3d(vector),
-        _ => panic!("Not implemented"),
+pub fn normalize(a: Vec<f64>) -> Vec<f64> {
+    let mut result: Vec<f64> = Vec::new();
+    let mag = magnitude(a.clone());
+    for i in 0..a.len() {
+        result.push(a[i] / mag);
     }
+    result
 }
 
-pub fn normalize(vector: &Vec<f64>) -> Vec<f64> {
-    match vector.len() {
-        2 => _normalize_2d(vector),
-        3 => _normalize_3d(vector),
-        _ => panic!("Not implemented"),
+pub fn clean_print(a: Vec<f64>, precision: usize) {
+    for i in 0..a.len() {
+        println!("{:.precision$}", a[i], precision = precision);
     }
-}
-
-fn _add_2d(vector1: &Vec<f64>, vector2: &Vec<f64>) -> Vec<f64> {
-    vec![vector1[0] + vector2[0], vector1[1] + vector2[1]]
-}
-
-fn _add_3d(vector1: &Vec<f64>, vector2: &Vec<f64>) -> Vec<f64> {
-    vec![
-        vector1[0] + vector2[0],
-        vector1[1] + vector2[1],
-        vector1[2] + vector2[2],
-    ]
-}
-
-fn _subtract_2d(vector1: &Vec<f64>, vector2: &Vec<f64>) -> Vec<f64> {
-    vec![vector1[0] - vector2[0], vector1[1] - vector2[1]]
-}
-
-fn _subtract_3d(vector1: &Vec<f64>, vector2: &Vec<f64>) -> Vec<f64> {
-    vec![
-        vector1[0] - vector2[0],
-        vector1[1] - vector2[1],
-        vector1[2] - vector2[2],
-    ]
-}
-
-fn _cross_3d(vector1: &Vec<f64>, vector2: &Vec<f64>) -> Vec<f64> {
-    vec![
-        vector1[1] * vector2[2] - vector1[2] * vector2[1],
-        vector1[2] * vector2[0] - vector1[0] * vector2[2],
-        vector1[0] * vector2[1] - vector1[1] * vector2[0],
-    ]
-}
-
-fn _dot_2d(vector1: &Vec<f64>, vector2: &Vec<f64>) -> f64 {
-    vector1[0] * vector2[0] + vector1[1] * vector2[1]
-}
-
-fn _dot_3d(vector1: &Vec<f64>, vector2: &Vec<f64>) -> f64 {
-    vector1[0] * vector2[0] + vector1[1] * vector2[1] + vector1[2] * vector2[2]
-}
-
-fn _scale_2d(vector: &Vec<f64>, scalar: f64) -> Vec<f64> {
-    vec![vector[0] * scalar, vector[1] * scalar]
-}
-
-fn _scale_3d(vector: &Vec<f64>, scalar: f64) -> Vec<f64> {
-    vec![vector[0] * scalar, vector[1] * scalar, vector[2] * scalar]
-}
-
-fn _magnitude_2d(vector: &Vec<f64>) -> f64 {
-    (vector[0] * vector[0] + vector[1] * vector[1]).sqrt()
-}
-
-fn _magnitude_3d(vector: &Vec<f64>) -> f64 {
-    (vector[0] * vector[0] + vector[1] * vector[1] + vector[2] * vector[2]).sqrt()
-}
-
-fn _normalize_2d(vector: &Vec<f64>) -> Vec<f64> {
-    let magnitude = _magnitude_2d(vector);
-    _scale_2d(vector, 1.0 / magnitude)
-}
-
-fn _normalize_3d(vector: &Vec<f64>) -> Vec<f64> {
-    let magnitude = _magnitude_3d(vector);
-    _scale_3d(vector, 1.0 / magnitude)
 }
 
 #[cfg(test)]
@@ -126,110 +66,66 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_add_2d() {
-        let vector1 = vec![1.0, 2.0];
-        let vector2 = vec![3.0, 4.0];
-        let expected_result = vec![4.0, 6.0];
-        assert_eq!(_add_2d(&vector1, &vector2), expected_result);
+    pub fn test_add() {
+        let a = vec![1.0, 2.0, 3.0];
+        let b = vec![4.0, 5.0, 6.0];
+        let result = add(a, b);
+        assert_eq!(result, vec![5.0, 7.0, 9.0]);
     }
 
     #[test]
-    fn test_add_3d() {
-        let vector1 = vec![1.0, 2.0, 3.0];
-        let vector2 = vec![4.0, 5.0, 6.0];
-        let expected_result = vec![5.0, 7.0, 9.0];
-        assert_eq!(_add_3d(&vector1, &vector2), expected_result);
+    pub fn test_subtract() {
+        let a = vec![1.0, 2.0, 3.0];
+        let b = vec![4.0, 5.0, 6.0];
+        let result = subtract(a, b);
+        assert_eq!(result, vec![-3.0, -3.0, -3.0]);
     }
 
     #[test]
-    #[should_panic(expected = "Not implemented")]
-    fn test_add_with_unsupported_dimension() {
-        let vector1 = vec![1.0, 2.0, 3.0, 4.0];
-        let vector2 = vec![5.0, 6.0, 7.0, 8.0];
-        add(&vector1, &vector2);
+    pub fn test_dot() {
+        let a = vec![1.0, 2.0, 3.0];
+        let b = vec![4.0, 5.0, 6.0];
+        let result = dot(a, b);
+        assert_eq!(result, 32.0);
     }
 
     #[test]
-    fn test_subtract_2d() {
-        let vector1 = vec![1.0, 2.0];
-        let vector2 = vec![3.0, 4.0];
-        let expected_result = vec![-2.0, -2.0];
-        assert_eq!(_subtract_2d(&vector1, &vector2), expected_result);
+    pub fn test_scale() {
+        let a = vec![1.0, 2.0, 3.0];
+        let b = 2.0;
+        let result = scale(a, b);
+        assert_eq!(result, vec![2.0, 4.0, 6.0]);
     }
 
     #[test]
-    fn test_subtract_3d() {
-        let vector1 = vec![1.0, 2.0, 3.0];
-        let vector2 = vec![4.0, 5.0, 6.0];
-        let expected_result = vec![-3.0, -3.0, -3.0];
-        assert_eq!(_subtract_3d(&vector1, &vector2), expected_result);
+    pub fn test_cross() {
+        let a = vec![1.0, 2.0, 3.0];
+        let b = vec![4.0, 5.0, 6.0];
+        let result = cross(a, b);
+        assert_eq!(result, vec![-3.0, 6.0, -3.0]);
     }
 
     #[test]
-    fn test_dot_2d() {
-        let vector1 = vec![1.0, 2.0];
-        let vector2 = vec![3.0, 4.0];
-        let expected_result = 11.0;
-        assert_eq!(_dot_2d(&vector1, &vector2), expected_result);
+    pub fn test_magnitude() {
+        let a = vec![1.0, 2.0, 3.0];
+        let result = magnitude(a);
+        assert_eq!(result, 3.7416573867739413);
     }
 
     #[test]
-    fn test_dot_3d() {
-        let vector1 = vec![1.0, 2.0, 3.0];
-        let vector2 = vec![4.0, 5.0, 6.0];
-        let expected_result = 32.0;
-        assert_eq!(_dot_3d(&vector1, &vector2), expected_result);
+    pub fn test_normalize() {
+        let a = vec![1.0, 2.0, 3.0];
+        let result = normalize(a);
+        assert_eq!(
+            result,
+            vec![0.2672612419124244, 0.5345224838248488, 0.8017837257372732]
+        );
     }
 
     #[test]
-    fn test_cross_3d() {
-        let vector1 = vec![1.0, 2.0, 3.0];
-        let vector2 = vec![4.0, 5.0, 6.0];
-        let expected_result = vec![-3.0, 6.0, -3.0];
-        assert_eq!(_cross_3d(&vector1, &vector2), expected_result);
-    }
-
-    #[test]
-    fn test_scale_2d() {
-        let vector = vec![1.0, 2.0];
-        let scalar = 3.0;
-        let expected_result = vec![3.0, 6.0];
-        assert_eq!(_scale_2d(&vector, scalar), expected_result);
-    }
-
-    #[test]
-    fn test_scale_3d() {
-        let vector = vec![1.0, 2.0, 3.0];
-        let scalar = 3.0;
-        let expected_result = vec![3.0, 6.0, 9.0];
-        assert_eq!(_scale_3d(&vector, scalar), expected_result);
-    }
-
-    #[test]
-    fn test_magnitude_2d() {
-        let vector = vec![3.0, 4.0];
-        let expected_result = 5.0;
-        assert_eq!(_magnitude_2d(&vector), expected_result);
-    }
-
-    #[test]
-    fn test_magnitude_3d() {
-        let vector = vec![2.0, 3.0, 6.0];
-        let expected_result = 7.0;
-        assert_eq!(_magnitude_3d(&vector), expected_result);
-    }
-
-    #[test]
-    fn test_normalize_2d() {
-        let vector = vec![3.0, 4.0];
-        let expected_result = vec![0.6, 0.8];
-        assert_eq!(_normalize_2d(&vector), expected_result);
-    }
-
-    #[test]
-    fn test_normalize_3d() {
-        let vector = vec![2.0, 3.0, 6.0];
-        let expected_result = vec![2.0 / 7.0, 3.0 / 7.0, 6.0 / 7.0];
-        assert_eq!(_normalize_3d(&vector), expected_result);
+    pub fn test_clean_print() {
+        let a = vec![1.0, 2.0, 3.0];
+        let precision = 2;
+        clean_print(a, precision);
     }
 }
