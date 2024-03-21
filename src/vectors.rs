@@ -56,14 +56,24 @@ pub fn normalize(a: Vec<f64>) -> Vec<f64> {
 }
 
 pub fn clean_print(a: Vec<f64>, precision: usize) {
-    let mut count = 0;
-    for i in 0..a.len() {
-        print!("[{:.*} ", precision, a[i]);
-        count += 1;
-        if count == 3 || i == a.len() - 1 {
-            print!("]");
-            println!();
-            count = 0;
+    let mut count = 1;
+    match a.len() {
+        0 => {
+            println!("[]");
+        }
+        _ => {
+            for i in 0..a.len() {
+                if count == 1 {
+                    print!("[{:.precision$}, ", a[i], precision = precision);
+                } else if count == 2 {
+                    print!("{:.precision$}, ", a[i], precision = precision);
+                } else {
+                    print!("{:.precision$}]", a[i], precision = precision);
+                    println!();
+                    count = 0;
+                }
+                count += 1;
+            }
         }
     }
 }
