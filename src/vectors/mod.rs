@@ -19,6 +19,30 @@ impl CartesianVector {
         CartesianVector { x, y, z }
     }
 
+    pub fn x_axis() -> CartesianVector {
+        CartesianVector {
+            x: 1.0,
+            y: 0.0,
+            z: 0.0,
+        }
+    }
+
+    pub fn y_axis() -> CartesianVector {
+        CartesianVector {
+            x: 0.0,
+            y: 1.0,
+            z: 0.0,
+        }
+    }
+
+    pub fn z_axis() -> CartesianVector {
+        CartesianVector {
+            x: 0.0,
+            y: 0.0,
+            z: 1.0,
+        }
+    }
+
     pub fn x(&self) -> f64 {
         self.x
     }
@@ -90,6 +114,43 @@ impl CartesianVector {
             declination,
         }
     }
+
+    pub fn rotate_about_x(&self, angle: f64) -> CartesianVector {
+        let x = self.x;
+        let y = self.y * angle.cos() - self.z * angle.sin();
+        let z = self.y * angle.sin() + self.z * angle.cos();
+        CartesianVector { x, y, z }
+    }
+
+    pub fn rotate_about_y(&self, angle: f64) -> CartesianVector {
+        let x = self.x * angle.cos() + self.z * angle.sin();
+        let y = self.y;
+        let z = -self.x * angle.sin() + self.z * angle.cos();
+        CartesianVector { x, y, z }
+    }
+
+    pub fn rotate_about_z(&self, angle: f64) -> CartesianVector {
+        let x = self.x * angle.cos() - self.y * angle.sin();
+        let y = self.x * angle.sin() + self.y * angle.cos();
+        let z = self.z;
+        CartesianVector { x, y, z }
+    }
+
+    pub fn rotate_about_axis(&self, axis: CartesianVector, angle: f64) -> CartesianVector {
+        let c = angle.cos();
+        let s = angle.sin();
+        let t = 1.0 - c;
+        let x = self.x * (c + axis.x * axis.x * t)
+            + self.y * (axis.x * axis.y * t - axis.z * s)
+            + self.z * (axis.x * axis.z * t + axis.y * s);
+        let y = self.x * (axis.y * axis.x * t + axis.z * s)
+            + self.y * (c + axis.y * axis.y * t)
+            + self.z * (axis.y * axis.z * t - axis.x * s);
+        let z = self.x * (axis.z * axis.x * t - axis.y * s)
+            + self.y * (axis.z * axis.y * t + axis.x * s)
+            + self.z * (c + axis.z * axis.z * t);
+        CartesianVector { x, y, z }
+    }
 }
 
 impl SphericalVector {
@@ -119,6 +180,7 @@ impl SphericalVector {
 #[cfg(test)]
 mod cartesian_vector_tests {
     use super::*;
+    use assert_approx_eq::assert_approx_eq;
 
     #[test]
     fn test_cartesian_vector_plus() {
@@ -197,5 +259,66 @@ mod cartesian_vector_tests {
         assert_eq!(b.r, 3.7416573867739413);
         assert_eq!(b.right_ascension, 1.1071487177940904);
         assert_eq!(b.declination, 0.6405223126794245);
+    }
+
+    #[test]
+    fn test_cartesian_vector_x_axis() {
+        let a = CartesianVector::x_axis();
+        assert_eq!(a.x, 1.0);
+        assert_eq!(a.y, 0.0);
+        assert_eq!(a.z, 0.0);
+    }
+
+    #[test]
+    fn test_cartesian_vector_y_axis() {
+        let a = CartesianVector::y_axis();
+        assert_eq!(a.x, 0.0);
+        assert_eq!(a.y, 1.0);
+        assert_eq!(a.z, 0.0);
+    }
+
+    #[test]
+    fn test_cartesian_vector_z_axis() {
+        let a = CartesianVector::z_axis();
+        assert_eq!(a.x, 0.0);
+        assert_eq!(a.y, 0.0);
+        assert_eq!(a.z, 1.0);
+    }
+
+    #[test]
+    fn test_cartesian_vector_rotate_about_x() {
+        let a = CartesianVector::new(1.0, 2.0, 3.0);
+        let b = a.rotate_about_x(std::f64::consts::PI / 2.0);
+        assert_approx_eq!(b.x, 1.0, 1e-12);
+        assert_approx_eq!(b.y, -3.0, 1e-12);
+        assert_approx_eq!(b.z, 2.0, 1e-12);
+    }
+
+    #[test]
+    fn test_cartesian_vector_rotate_about_y() {
+        let a = CartesianVector::new(1.0, 2.0, 3.0);
+        let b = a.rotate_about_y(std::f64::consts::PI / 2.0);
+        assert_approx_eq!(b.x, 3.0, 1e-12);
+        assert_approx_eq!(b.y, 2.0, 1e-12);
+        assert_approx_eq!(b.z, -1.0, 1e-12);
+    }
+
+    #[test]
+    fn test_cartesian_vector_rotate_about_z() {
+        let a = CartesianVector::new(1.0, 2.0, 3.0);
+        let b = a.rotate_about_z(std::f64::consts::PI / 2.0);
+        assert_approx_eq!(b.x, -2.0, 1e-12);
+        assert_approx_eq!(b.y, 1.0, 1e-12);
+        assert_approx_eq!(b.z, 3.0, 1e-12);
+    }
+
+    #[test]
+    fn test_cartesian_vector_rotate_about_axis() {
+        let a = CartesianVector::new(1.0, 2.0, 3.0);
+        let b = CartesianVector::new(1.0, 1.0, 1.0).normalize();
+        let c = a.rotate_about_axis(b, std::f64::consts::PI / 2.0);
+        assert_approx_eq!(c.x, 2.577350269189626, 1e-12);
+        assert_approx_eq!(c.y, 0.8452994616207488, 1e-12);
+        assert_approx_eq!(c.z, 2.577350269189626, 1e-12);
     }
 }
