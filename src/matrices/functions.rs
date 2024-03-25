@@ -1,3 +1,12 @@
+/// Adds two matrices of arbitrary dimensions
+/// # Example
+/// ```rust
+/// use linear_algebra::matrices::functions::add;
+/// let a = vec![vec![1.0, 2.0], vec![3.0, 4.0]];
+/// let b = vec![vec![5.0, 6.0], vec![7.0, 8.0]];
+/// let result = add(a, b);
+/// println!("{:?}", result); // [[6.0, 8.0], [10.0, 12.0]]
+/// ```
 pub fn add(a: Vec<Vec<f64>>, b: Vec<Vec<f64>>) -> Vec<Vec<f64>> {
     let mut result: Vec<Vec<f64>> = Vec::new();
     for i in 0..a.len() {
@@ -10,6 +19,15 @@ pub fn add(a: Vec<Vec<f64>>, b: Vec<Vec<f64>>) -> Vec<Vec<f64>> {
     result
 }
 
+/// Subtracts two matrices of arbitrary dimensions
+/// # Example
+/// ```rust
+/// use linear_algebra::matrices::functions::subtract;
+/// let a = vec![vec![1.0, 2.0], vec![3.0, 4.0]];
+/// let b = vec![vec![5.0, 6.0], vec![7.0, 8.0]];
+/// let result = subtract(a, b);
+/// println!("{:?}", result); // [[-4.0, -4.0], [-4.0, -4.0]]
+/// ```
 pub fn subtract(a: Vec<Vec<f64>>, b: Vec<Vec<f64>>) -> Vec<Vec<f64>> {
     let mut result: Vec<Vec<f64>> = Vec::new();
     for i in 0..a.len() {
@@ -22,6 +40,15 @@ pub fn subtract(a: Vec<Vec<f64>>, b: Vec<Vec<f64>>) -> Vec<Vec<f64>> {
     result
 }
 
+/// Multiplies two matrices of arbitrary dimensions
+/// # Example
+/// ```rust
+/// use linear_algebra::matrices::functions::multiply;
+/// let a = vec![vec![1.0, 2.0], vec![3.0, 4.0]];
+/// let b = vec![vec![5.0, 6.0], vec![7.0, 8.0]];
+/// let result = multiply(a, b);
+/// println!("{:?}", result); // [[19.0, 22.0], [43.0, 50.0]]
+/// ```
 pub fn multiply(a: Vec<Vec<f64>>, b: Vec<Vec<f64>>) -> Vec<Vec<f64>> {
     let mut result: Vec<Vec<f64>> = Vec::new();
     for i in 0..a.len() {
@@ -38,6 +65,15 @@ pub fn multiply(a: Vec<Vec<f64>>, b: Vec<Vec<f64>>) -> Vec<Vec<f64>> {
     result
 }
 
+/// Scales a matrix by a scalar
+/// # Example
+/// ```rust
+/// use linear_algebra::matrices::functions::scale;
+/// let a = vec![vec![1.0, 2.0], vec![3.0, 4.0]];
+/// let b = 2.0;
+/// let result = scale(a, b);
+/// println!("{:?}", result); // [[2.0, 4.0], [6.0, 8.0]]
+/// ```
 pub fn scale(a: Vec<Vec<f64>>, b: f64) -> Vec<Vec<f64>> {
     let mut result: Vec<Vec<f64>> = Vec::new();
     for i in 0..a.len() {
@@ -50,6 +86,14 @@ pub fn scale(a: Vec<Vec<f64>>, b: f64) -> Vec<Vec<f64>> {
     result
 }
 
+/// Transposes a matrix
+/// # Example
+/// ```rust
+/// use linear_algebra::matrices::functions::transpose;
+/// let a = vec![vec![1.0, 2.0], vec![3.0, 4.0]];
+/// let result = transpose(a);
+/// println!("{:?}", result); // [[1.0, 3.0], [2.0, 4.0]]
+/// ```
 pub fn transpose(a: Vec<Vec<f64>>) -> Vec<Vec<f64>> {
     let mut result: Vec<Vec<f64>> = Vec::new();
     for i in 0..a[0].len() {
@@ -62,6 +106,13 @@ pub fn transpose(a: Vec<Vec<f64>>) -> Vec<Vec<f64>> {
     result
 }
 
+/// Creates an identity matrix of a given size
+/// # Example
+/// ```rust
+/// use linear_algebra::matrices::functions::identity;
+/// let result = identity(3);
+/// println!("{:?}", result); // [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]
+/// ```
 pub fn identity(size: usize) -> Vec<Vec<f64>> {
     let mut result: Vec<Vec<f64>> = Vec::new();
     for i in 0..size {
@@ -78,6 +129,14 @@ pub fn identity(size: usize) -> Vec<Vec<f64>> {
     result
 }
 
+/// Calculates the determinant of a square matrix
+/// # Example
+/// ```rust
+/// use linear_algebra::matrices::functions::determinant;
+/// let a = vec![vec![1.0, 2.0], vec![3.0, 4.0]];
+/// let result = determinant(a);
+/// println!("{:?}", result); // -2.0
+/// ```
 pub fn determinant(a: Vec<Vec<f64>>) -> f64 {
     if a.len() == 2 {
         return a[0][0] * a[1][1] - a[0][1] * a[1][0];
@@ -101,15 +160,6 @@ pub fn determinant(a: Vec<Vec<f64>>) -> f64 {
         }
     }
     result
-}
-
-pub fn clean_print(a: Vec<Vec<f64>>, precision: usize) {
-    for i in 0..a.len() {
-        for j in 0..a[i].len() {
-            print!("{:.precision$} ", a[i][j], precision = precision);
-        }
-        println!();
-    }
 }
 
 #[cfg(test)]
@@ -172,11 +222,5 @@ mod tests {
         let a = vec![vec![1.0, 2.0], vec![3.0, 4.0]];
         let result = determinant(a);
         assert_eq!(result, -2.0);
-    }
-
-    #[test]
-    fn test_clean_print() {
-        let a = vec![vec![1.0, 2.0], vec![3.0, 4.0]];
-        clean_print(a, 2);
     }
 }

@@ -1,3 +1,12 @@
+/// Adds two vectors of arbitrary length
+/// # Example
+/// ```rust
+/// use linear_algebra::vectors::functions::add;
+/// let a = vec![1.0, 2.0, 3.0];
+/// let b = vec![4.0, 5.0, 6.0];
+/// let result = add(a, b);
+/// println!("{:?}", result); // [5.0, 7.0, 9.0]
+/// ```
 pub fn add(a: Vec<f64>, b: Vec<f64>) -> Vec<f64> {
     let mut result: Vec<f64> = Vec::new();
     for i in 0..a.len() {
@@ -6,6 +15,15 @@ pub fn add(a: Vec<f64>, b: Vec<f64>) -> Vec<f64> {
     result
 }
 
+/// Subtracts two vectors of arbitrary length
+/// # Example
+/// ```rust
+/// use linear_algebra::vectors::functions::subtract;
+/// let a = vec![1.0, 2.0, 3.0];
+/// let b = vec![4.0, 5.0, 6.0];
+/// let result = subtract(a, b);
+/// println!("{:?}", result); // [-3.0, -3.0, -3.0]
+/// ```
 pub fn subtract(a: Vec<f64>, b: Vec<f64>) -> Vec<f64> {
     let mut result: Vec<f64> = Vec::new();
     for i in 0..a.len() {
@@ -14,6 +32,15 @@ pub fn subtract(a: Vec<f64>, b: Vec<f64>) -> Vec<f64> {
     result
 }
 
+/// Calculates the dot product of two vectors of arbitrary length
+/// # Example
+/// ```rust
+/// use linear_algebra::vectors::functions::dot;
+/// let a = vec![1.0, 2.0, 3.0];
+/// let b = vec![4.0, 5.0, 6.0];
+/// let result = dot(a, b);
+/// println!("{:?}", result); // 32.0
+/// ```
 pub fn dot(a: Vec<f64>, b: Vec<f64>) -> f64 {
     let mut result: f64 = 0.0;
     for i in 0..a.len() {
@@ -22,60 +49,21 @@ pub fn dot(a: Vec<f64>, b: Vec<f64>) -> f64 {
     result
 }
 
+/// Scales a vector by a scalar
+/// # Example
+/// ```rust
+/// use linear_algebra::vectors::functions::scale;
+/// let a = vec![1.0, 2.0, 3.0];
+/// let b = 2.0;
+/// let result = scale(a, b);
+/// println!("{:?}", result); // [2.0, 4.0, 6.0]
+/// ```
 pub fn scale(a: Vec<f64>, b: f64) -> Vec<f64> {
     let mut result: Vec<f64> = Vec::new();
     for i in 0..a.len() {
         result.push(a[i] * b);
     }
     result
-}
-
-pub fn cross(a: Vec<f64>, b: Vec<f64>) -> Vec<f64> {
-    let mut result: Vec<f64> = Vec::new();
-    result.push(a[1] * b[2] - a[2] * b[1]);
-    result.push(a[2] * b[0] - a[0] * b[2]);
-    result.push(a[0] * b[1] - a[1] * b[0]);
-    result
-}
-
-pub fn magnitude(a: Vec<f64>) -> f64 {
-    let mut result: f64 = 0.0;
-    for i in 0..a.len() {
-        result += a[i] * a[i];
-    }
-    result.sqrt()
-}
-
-pub fn normalize(a: Vec<f64>) -> Vec<f64> {
-    let mut result: Vec<f64> = Vec::new();
-    let mag = magnitude(a.clone());
-    for i in 0..a.len() {
-        result.push(a[i] / mag);
-    }
-    result
-}
-
-pub fn clean_print(a: Vec<f64>, precision: usize) {
-    let mut count = 1;
-    match a.len() {
-        0 => {
-            println!("[]");
-        }
-        _ => {
-            for i in 0..a.len() {
-                if count == 1 {
-                    print!("[{:.precision$}, ", a[i], precision = precision);
-                } else if count == 2 {
-                    print!("{:.precision$}, ", a[i], precision = precision);
-                } else {
-                    print!("{:.precision$}]", a[i], precision = precision);
-                    println!();
-                    count = 0;
-                }
-                count += 1;
-            }
-        }
-    }
 }
 
 #[cfg(test)]
@@ -112,37 +100,5 @@ mod tests {
         let b = 2.0;
         let result = scale(a, b);
         assert_eq!(result, vec![2.0, 4.0, 6.0]);
-    }
-
-    #[test]
-    pub fn test_cross() {
-        let a = vec![1.0, 2.0, 3.0];
-        let b = vec![4.0, 5.0, 6.0];
-        let result = cross(a, b);
-        assert_eq!(result, vec![-3.0, 6.0, -3.0]);
-    }
-
-    #[test]
-    pub fn test_magnitude() {
-        let a = vec![1.0, 2.0, 3.0];
-        let result = magnitude(a);
-        assert_eq!(result, 3.7416573867739413);
-    }
-
-    #[test]
-    pub fn test_normalize() {
-        let a = vec![1.0, 2.0, 3.0];
-        let result = normalize(a);
-        assert_eq!(
-            result,
-            vec![0.2672612419124244, 0.5345224838248488, 0.8017837257372732]
-        );
-    }
-
-    #[test]
-    pub fn test_clean_print() {
-        let a = vec![1.0, 2.0, 3.0];
-        let precision = 2;
-        clean_print(a, precision);
     }
 }

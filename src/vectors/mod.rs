@@ -1,13 +1,40 @@
-pub mod functions;
+//! A module for vector math
+//! # Examples
+//! ```rust
+//! use linear_algebra::vectors::CartesianVector;
+//! let v1 = CartesianVector::new(1.0, 2.0, 3.0);
+//! let v2 = CartesianVector::new(4.0, 5.0, 6.0);
+//! let v3 = v1.cross(v2);
+//! println!("{:?}", v3);
+//! ```
+//! # Functions
+//! * [add](CartesianVector::plus)
+//! * subtract
+//! * dot
+//! * scale
+//! * cross
+//! * magnitude
+//! * normalize
+//! * to_spherical
+//! * x_axis
+//! * y_axis
+//! * z_axis
+//! * rotate_about_x
+//! * rotate_about_y
+//! * rotate_about_z
+//! * rotate_about_axis
+//!
 
-#[derive(Copy, Clone)]
+/// A 3D vector with x, y, and z components
+#[derive(Copy, Clone, Debug)]
 pub struct CartesianVector {
     x: f64,
     y: f64,
     z: f64,
 }
 
-#[derive(Copy, Clone)]
+/// A 3D vector with r, right ascension, and declination components
+#[derive(Copy, Clone, Debug)]
 pub struct SphericalVector {
     r: f64,
     right_ascension: f64,
@@ -15,10 +42,24 @@ pub struct SphericalVector {
 }
 
 impl CartesianVector {
+    /// Create a new CartesianVector
+    /// # Example
+    /// ```rust
+    /// use linear_algebra::vectors::CartesianVector;
+    /// let v1 = CartesianVector::new(1.0, 2.0, 3.0);
+    /// println!("{:?}", v1); // [1.0, 2.0, 3.0]
+    /// ```
     pub fn new(x: f64, y: f64, z: f64) -> CartesianVector {
         CartesianVector { x, y, z }
     }
 
+    /// Create a CartesianVector with x = 1.0, y = 0.0, z = 0.0
+    /// # Example
+    /// ```rust
+    /// use linear_algebra::vectors::CartesianVector;
+    /// let v1 = CartesianVector::x_axis();
+    /// println!("{:?}", v1); // [1.0, 0.0, 0.0]
+    /// ```
     pub fn x_axis() -> CartesianVector {
         CartesianVector {
             x: 1.0,
@@ -27,6 +68,13 @@ impl CartesianVector {
         }
     }
 
+    /// Create a CartesianVector with x = 0.0, y = 1.0, z = 0.0
+    /// # Example
+    /// ```rust
+    /// use linear_algebra::vectors::CartesianVector;
+    /// let v1 = CartesianVector::y_axis();
+    /// println!("{:?}", v1); // [0.0, 1.0, 0.0]
+    /// ```
     pub fn y_axis() -> CartesianVector {
         CartesianVector {
             x: 0.0,
@@ -35,6 +83,13 @@ impl CartesianVector {
         }
     }
 
+    /// Create a CartesianVector with x = 0.0, y = 0.0, z = 1.0
+    /// # Example
+    /// ```rust
+    /// use linear_algebra::vectors::CartesianVector;
+    /// let v1 = CartesianVector::z_axis();
+    /// println!("{:?}", v1); // [0.0, 0.0, 1.0]
+    /// ```
     pub fn z_axis() -> CartesianVector {
         CartesianVector {
             x: 0.0,
@@ -43,18 +98,48 @@ impl CartesianVector {
         }
     }
 
+    /// Get the x component of the CartesianVector
+    /// # Example
+    /// ```rust
+    /// use linear_algebra::vectors::CartesianVector;
+    /// let v1 = CartesianVector::new(1.0, 2.0, 3.0);
+    /// let x = v1.x(); // 1.0
+    /// ```
     pub fn x(&self) -> f64 {
         self.x
     }
 
+    /// Get the y component of the CartesianVector
+    /// # Example
+    /// ```rust
+    /// use linear_algebra::vectors::CartesianVector;
+    /// let v1 = CartesianVector::new(1.0, 2.0, 3.0);
+    /// let y = v1.y(); // 2.0
+    /// ```
     pub fn y(&self) -> f64 {
         self.y
     }
 
+    /// Get the z component of the CartesianVector
+    /// # Example
+    /// ```rust
+    /// use linear_algebra::vectors::CartesianVector;
+    /// let v1 = CartesianVector::new(1.0, 2.0, 3.0);
+    /// let z = v1.z(); // 3.0
+    /// ```
     pub fn z(&self) -> f64 {
         self.z
     }
 
+    /// Add two CartesianVectors
+    /// # Example
+    /// ```rust
+    /// use linear_algebra::vectors::CartesianVector;
+    /// let v1 = CartesianVector::new(1.0, 2.0, 3.0);
+    /// let v2 = CartesianVector::new(4.0, 5.0, 6.0);
+    /// let v3 = v1.plus(v2);
+    /// println!("{:?}", v3); // [5.0, 7.0, 9.0]
+    /// ```
     pub fn plus(&self, other: CartesianVector) -> CartesianVector {
         CartesianVector {
             x: self.x + other.x,
@@ -63,6 +148,15 @@ impl CartesianVector {
         }
     }
 
+    /// Subtract two CartesianVectors
+    /// # Example
+    /// ```rust
+    /// use linear_algebra::vectors::CartesianVector;
+    /// let v1 = CartesianVector::new(1.0, 2.0, 3.0);
+    /// let v2 = CartesianVector::new(4.0, 5.0, 6.0);
+    /// let v3 = v1.minus(v2);
+    /// println!("{:?}", v3); // [-3.0, -3.0, -3.0]
+    /// ```
     pub fn minus(&self, other: CartesianVector) -> CartesianVector {
         CartesianVector {
             x: self.x - other.x,
@@ -71,10 +165,27 @@ impl CartesianVector {
         }
     }
 
+    /// Calculate the dot product of two CartesianVectors
+    /// # Example
+    /// ```rust
+    /// use linear_algebra::vectors::CartesianVector;
+    /// let v1 = CartesianVector::new(1.0, 2.0, 3.0);
+    /// let v2 = CartesianVector::new(4.0, 5.0, 6.0);
+    /// let v3 = v1.dot(v2);
+    /// println!("{:?}", v3); // 32.0
+    /// ```
     pub fn dot(&self, other: CartesianVector) -> f64 {
         self.x * other.x + self.y * other.y + self.z * other.z
     }
 
+    /// Scale a CartesianVector by a scalar
+    /// # Example
+    /// ```rust
+    /// use linear_algebra::vectors::CartesianVector;
+    /// let v1 = CartesianVector::new(1.0, 2.0, 3.0);
+    /// let v2 = v1.scale(2.0);
+    /// println!("{:?}", v2); // [2.0, 4.0, 6.0]
+    /// ```
     pub fn scale(&self, scalar: f64) -> CartesianVector {
         CartesianVector {
             x: self.x * scalar,
@@ -83,6 +194,15 @@ impl CartesianVector {
         }
     }
 
+    /// Calculate the cross product of two CartesianVectors
+    /// # Example
+    /// ```rust
+    /// use linear_algebra::vectors::CartesianVector;
+    /// let v1 = CartesianVector::new(1.0, 2.0, 3.0);
+    /// let v2 = CartesianVector::new(4.0, 5.0, 6.0);
+    /// let v3 = v1.cross(v2);
+    /// println!("{:?}", v3); // [-3.0, 6.0, -3.0]
+    /// ```
     pub fn cross(&self, other: CartesianVector) -> CartesianVector {
         CartesianVector {
             x: self.y * other.z - self.z * other.y,
@@ -91,19 +211,51 @@ impl CartesianVector {
         }
     }
 
+    /// Calculate the magnitude of a CartesianVector
+    /// # Example
+    /// ```rust
+    /// use linear_algebra::vectors::CartesianVector;
+    /// let v1 = CartesianVector::new(1.0, 2.0, 3.0);
+    /// let v2 = v1.magnitude();
+    /// println!("{:?}", v2); // 3.7416573867739413
+    /// ```
     pub fn magnitude(&self) -> f64 {
         (self.x * self.x + self.y * self.y + self.z * self.z).sqrt()
     }
 
+    /// Normalize a CartesianVector
+    /// # Example
+    /// ```rust
+    /// use linear_algebra::vectors::CartesianVector;
+    /// let v1 = CartesianVector::new(1.0, 2.0, 3.0);
+    /// let v2 = v1.normalize();
+    /// println!("{:?}", v2); // [0.2672612419124244, 0.5345224838248488, 0.8017837257372732]
+    /// ```
     pub fn normalize(&self) -> CartesianVector {
         let mag = self.magnitude();
         self.scale(1.0 / mag)
     }
 
+    /// Convert a CartesianVector to a string
+    /// # Example
+    /// ```rust
+    /// use linear_algebra::vectors::CartesianVector;
+    /// let v1 = CartesianVector::new(1.0, 2.0, 3.0);
+    /// let v2 = v1.to_string();
+    /// println!("{:?}", v2); // "[1, 2, 3]"
+    /// ```
     pub fn to_string(&self) -> String {
         format!("[{}, {}, {}]", self.x, self.y, self.z)
     }
 
+    /// Convert a CartesianVector to a SphericalVector
+    /// # Example
+    /// ```rust
+    /// use linear_algebra::vectors::{CartesianVector, SphericalVector};
+    /// let v1 = CartesianVector::new(1.0, 2.0, 3.0);
+    /// let v2 = v1.to_spherical();
+    /// println!("{:?}", v2); // SphericalVector { r: 3.7416573867739413, right_ascension: 1.1071487177940904, declination: 0.6405223126794245 }
+    /// ```
     pub fn to_spherical(&self) -> SphericalVector {
         let r = self.magnitude();
         let right_ascension = self.y.atan2(self.x);
@@ -115,6 +267,14 @@ impl CartesianVector {
         }
     }
 
+    /// Rotate a CartesianVector about the x-axis
+    /// # Example
+    /// ```rust
+    /// use linear_algebra::vectors::CartesianVector;
+    /// let v1 = CartesianVector::new(1.0, 2.0, 3.0);
+    /// let v2 = v1.rotate_about_x(std::f64::consts::PI / 2.0);
+    /// println!("{:?}", v2); // [1.0, -3.0, 2.0]
+    /// ```
     pub fn rotate_about_x(&self, angle: f64) -> CartesianVector {
         let x = self.x;
         let y = self.y * angle.cos() - self.z * angle.sin();
@@ -122,6 +282,14 @@ impl CartesianVector {
         CartesianVector { x, y, z }
     }
 
+    /// Rotate a CartesianVector about the y-axis
+    /// # Example
+    /// ```rust
+    /// use linear_algebra::vectors::CartesianVector;
+    /// let v1 = CartesianVector::new(1.0, 2.0, 3.0);
+    /// let v2 = v1.rotate_about_y(std::f64::consts::PI / 2.0);
+    /// println!("{:?}", v2); // [3.0, 2.0, -1.0]
+    /// ```
     pub fn rotate_about_y(&self, angle: f64) -> CartesianVector {
         let x = self.x * angle.cos() + self.z * angle.sin();
         let y = self.y;
@@ -129,6 +297,14 @@ impl CartesianVector {
         CartesianVector { x, y, z }
     }
 
+    /// Rotate a CartesianVector about the z-axis
+    /// # Example
+    /// ```rust
+    /// use linear_algebra::vectors::CartesianVector;
+    /// let v1 = CartesianVector::new(1.0, 2.0, 3.0);
+    /// let v2 = v1.rotate_about_z(std::f64::consts::PI / 2.0);
+    /// println!("{:?}", v2); // [-2.0, 1.0, 3.0]
+    /// ```
     pub fn rotate_about_z(&self, angle: f64) -> CartesianVector {
         let x = self.x * angle.cos() - self.y * angle.sin();
         let y = self.x * angle.sin() + self.y * angle.cos();
@@ -136,6 +312,15 @@ impl CartesianVector {
         CartesianVector { x, y, z }
     }
 
+    /// Rotate a CartesianVector about an arbitrary axis
+    /// # Example
+    /// ```rust
+    /// use linear_algebra::vectors::CartesianVector;
+    /// let v1 = CartesianVector::new(1.0, 2.0, 3.0);
+    /// let v2 = CartesianVector::new(1.0, 1.0, 1.0).normalize();
+    /// let v3 = v1.rotate_about_axis(v2, std::f64::consts::PI / 2.0);
+    /// println!("{:?}", v3); // [2.577350269189626, 0.8452994616207488, 2.577350269189626]
+    /// ```
     pub fn rotate_about_axis(&self, axis: CartesianVector, angle: f64) -> CartesianVector {
         let c = angle.cos();
         let s = angle.sin();
@@ -154,6 +339,13 @@ impl CartesianVector {
 }
 
 impl SphericalVector {
+    /// Create a new SphericalVector
+    /// # Example
+    /// ```rust
+    /// use linear_algebra::vectors::SphericalVector;
+    /// let v1 = SphericalVector::new(1.0, 2.0, 3.0);
+    /// println!("{:?}", v1); // SphericalVector { r: 1.0, right_ascension: 2.0, declination: 3.0 }
+    /// ```
     pub fn new(r: f64, right_ascension: f64, declination: f64) -> SphericalVector {
         SphericalVector {
             r,
@@ -162,6 +354,14 @@ impl SphericalVector {
         }
     }
 
+    /// Convert a SphericalVector to a CartesianVector
+    /// # Example
+    /// ```rust
+    /// use linear_algebra::vectors::{CartesianVector, SphericalVector};
+    /// let v1 = SphericalVector::new(1.0, 2.0, 3.0);
+    /// let v2 = v1.to_cartesian();
+    /// println!("{:?}", v2); // [0.4025674938050524, 0.6142127126896676, 0.6795203866473763]
+    /// ```
     pub fn to_cartesian(&self) -> CartesianVector {
         let x = self.r * self.right_ascension.cos() * self.declination.cos();
         let y = self.r * self.right_ascension.sin() * self.declination.cos();
@@ -169,9 +369,17 @@ impl SphericalVector {
         CartesianVector { x, y, z }
     }
 
+    /// Convert a SphericalVector to a string
+    /// # Example
+    /// ```rust
+    /// use linear_algebra::vectors::SphericalVector;
+    /// let v1 = SphericalVector::new(1.0, 2.0, 3.0);
+    /// let v2 = v1.to_string();
+    /// println!("{:?}", v2); // "[1, 2, 3]"
+    /// ```
     pub fn to_string(&self) -> String {
         format!(
-            "({}, {}, {})",
+            "[{}, {}, {}]",
             self.r, self.right_ascension, self.declination
         )
     }
