@@ -1,11 +1,21 @@
+//! Module used to perform basic opertations on vectors of arbitrary length
+
 /// Adds two vectors of arbitrary length
 /// # Example
+/// ## Code
 /// ```rust
 /// use linear_algebra::vectors::functions::add;
-/// let a = vec![1.0, 2.0, 3.0];
-/// let b = vec![4.0, 5.0, 6.0];
-/// let result = add(a, b);
-/// println!("{:?}", result); // [5.0, 7.0, 9.0]
+/// fn main() {
+///    let a = vec![1.0, 2.0, 3.0];
+///    let b = vec![4.0, 5.0, 6.0];
+///    let result = add(a, b);
+///    println!("{:?}", result);
+/// }
+/// ```
+/// ## Terminal
+/// ```bash
+/// $ cargo run
+/// [5.0, 7.0, 9.0]
 /// ```
 pub fn add(a: Vec<f64>, b: Vec<f64>) -> Vec<f64> {
     let mut result: Vec<f64> = Vec::new();
@@ -17,12 +27,21 @@ pub fn add(a: Vec<f64>, b: Vec<f64>) -> Vec<f64> {
 
 /// Subtracts two vectors of arbitrary length
 /// # Example
+/// ## Code
 /// ```rust
 /// use linear_algebra::vectors::functions::subtract;
-/// let a = vec![1.0, 2.0, 3.0];
-/// let b = vec![4.0, 5.0, 6.0];
-/// let result = subtract(a, b);
-/// println!("{:?}", result); // [-3.0, -3.0, -3.0]
+///
+/// fn main() {
+///     let a = vec![1.0, 2.0, 3.0];
+///     let b = vec![4.0, 5.0, 6.0];
+///     let result = subtract(a, b);
+///     println!("{:?}", result);
+/// }
+/// ```
+/// ## Terminal
+/// ```bash
+/// $ cargo run
+/// [-3.0, -3.0, -3.0]
 /// ```
 pub fn subtract(a: Vec<f64>, b: Vec<f64>) -> Vec<f64> {
     let mut result: Vec<f64> = Vec::new();
@@ -34,12 +53,21 @@ pub fn subtract(a: Vec<f64>, b: Vec<f64>) -> Vec<f64> {
 
 /// Calculates the dot product of two vectors of arbitrary length
 /// # Example
+/// ## Code
 /// ```rust
 /// use linear_algebra::vectors::functions::dot;
-/// let a = vec![1.0, 2.0, 3.0];
-/// let b = vec![4.0, 5.0, 6.0];
-/// let result = dot(a, b);
-/// println!("{:?}", result); // 32.0
+///
+/// fn main() {
+///     let a = vec![1.0, 2.0, 3.0];
+///     let b = vec![4.0, 5.0, 6.0];
+///     let result = dot(a, b);
+///     println!("{:?}", result);
+/// }
+/// ```
+/// ## Terminal
+/// ```bash
+/// $ cargo run
+/// 32.0
 /// ```
 pub fn dot(a: Vec<f64>, b: Vec<f64>) -> f64 {
     let mut result: f64 = 0.0;
@@ -49,14 +77,23 @@ pub fn dot(a: Vec<f64>, b: Vec<f64>) -> f64 {
     result
 }
 
-/// Scales a vector by a scalar
+/// Scales a vector by the multiple b
 /// # Example
+/// ## Code
 /// ```rust
 /// use linear_algebra::vectors::functions::scale;
-/// let a = vec![1.0, 2.0, 3.0];
-/// let b = 2.0;
-/// let result = scale(a, b);
-/// println!("{:?}", result); // [2.0, 4.0, 6.0]
+///
+/// fn main() {
+///     let a = vec![1.0, 2.0, 3.0];
+///     let b = 2.0;
+///     let result = scale(a, b);
+///     println!("{:?}", result);
+/// }
+/// ```
+/// ## Terminal
+/// ```bash
+/// $ cargo run
+/// [2.0, 4.0, 6.0]
 /// ```
 pub fn scale(a: Vec<f64>, b: f64) -> Vec<f64> {
     let mut result: Vec<f64> = Vec::new();

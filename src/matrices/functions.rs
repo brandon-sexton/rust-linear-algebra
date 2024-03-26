@@ -1,11 +1,21 @@
+//!  Module used to perform basic opertations on matrices of arbitrary dimensions
 /// Adds two matrices of arbitrary dimensions
 /// # Example
+/// ## Code
 /// ```rust
 /// use linear_algebra::matrices::functions::add;
-/// let a = vec![vec![1.0, 2.0], vec![3.0, 4.0]];
-/// let b = vec![vec![5.0, 6.0], vec![7.0, 8.0]];
-/// let result = add(a, b);
-/// println!("{:?}", result); // [[6.0, 8.0], [10.0, 12.0]]
+///
+/// fn main() {
+///     let a = vec![vec![1.0, 2.0], vec![3.0, 4.0]];
+///     let b = vec![vec![5.0, 6.0], vec![7.0, 8.0]];
+///     let result = add(a, b);
+///     println!("{:?}", result);
+/// }
+/// ```
+/// ## Terminal
+/// ```bash
+/// $ cargo run
+/// [[6.0, 8.0], [10.0, 12.0]]
 /// ```
 pub fn add(a: Vec<Vec<f64>>, b: Vec<Vec<f64>>) -> Vec<Vec<f64>> {
     let mut result: Vec<Vec<f64>> = Vec::new();
@@ -21,12 +31,21 @@ pub fn add(a: Vec<Vec<f64>>, b: Vec<Vec<f64>>) -> Vec<Vec<f64>> {
 
 /// Subtracts two matrices of arbitrary dimensions
 /// # Example
+/// ## Code
 /// ```rust
 /// use linear_algebra::matrices::functions::subtract;
-/// let a = vec![vec![1.0, 2.0], vec![3.0, 4.0]];
-/// let b = vec![vec![5.0, 6.0], vec![7.0, 8.0]];
-/// let result = subtract(a, b);
-/// println!("{:?}", result); // [[-4.0, -4.0], [-4.0, -4.0]]
+///
+/// fn main() {
+///     let a = vec![vec![1.0, 2.0], vec![3.0, 4.0]];
+///     let b = vec![vec![5.0, 6.0], vec![7.0, 8.0]];
+///     let result = subtract(a, b);
+///     println!("{:?}", result);
+/// }
+/// ```
+/// ## Terminal
+/// ```bash
+/// $ cargo run
+/// [[-4.0, -4.0], [-4.0, -4.0]]
 /// ```
 pub fn subtract(a: Vec<Vec<f64>>, b: Vec<Vec<f64>>) -> Vec<Vec<f64>> {
     let mut result: Vec<Vec<f64>> = Vec::new();
@@ -42,12 +61,21 @@ pub fn subtract(a: Vec<Vec<f64>>, b: Vec<Vec<f64>>) -> Vec<Vec<f64>> {
 
 /// Multiplies two matrices of arbitrary dimensions
 /// # Example
+/// ## Code
 /// ```rust
 /// use linear_algebra::matrices::functions::multiply;
-/// let a = vec![vec![1.0, 2.0], vec![3.0, 4.0]];
-/// let b = vec![vec![5.0, 6.0], vec![7.0, 8.0]];
-/// let result = multiply(a, b);
-/// println!("{:?}", result); // [[19.0, 22.0], [43.0, 50.0]]
+///
+/// fn main() {
+///     let a = vec![vec![1.0, 2.0], vec![3.0, 4.0]];
+///     let b = vec![vec![5.0, 6.0], vec![7.0, 8.0]];
+///     let result = multiply(a, b);
+///     println!("{:?}", result);
+/// }
+/// ```
+/// ## Terminal
+/// ```bash
+/// $ cargo run
+/// [[19.0, 22.0], [43.0, 50.0]]
 /// ```
 pub fn multiply(a: Vec<Vec<f64>>, b: Vec<Vec<f64>>) -> Vec<Vec<f64>> {
     let mut result: Vec<Vec<f64>> = Vec::new();
@@ -65,14 +93,23 @@ pub fn multiply(a: Vec<Vec<f64>>, b: Vec<Vec<f64>>) -> Vec<Vec<f64>> {
     result
 }
 
-/// Scales a matrix by a scalar
+/// Scales a matrix by an input multiple
 /// # Example
+/// ## Code
 /// ```rust
 /// use linear_algebra::matrices::functions::scale;
-/// let a = vec![vec![1.0, 2.0], vec![3.0, 4.0]];
-/// let b = 2.0;
-/// let result = scale(a, b);
-/// println!("{:?}", result); // [[2.0, 4.0], [6.0, 8.0]]
+///
+/// fn main() {
+///     let a = vec![vec![1.0, 2.0], vec![3.0, 4.0]];
+///     let b = 2.0;
+///     let result = scale(a, b);
+///     println!("{:?}", result);
+/// }
+/// ```
+/// ## Terminal
+/// ```bash
+/// $ cargo run
+/// [[2.0, 4.0], [6.0, 8.0]]
 /// ```
 pub fn scale(a: Vec<Vec<f64>>, b: f64) -> Vec<Vec<f64>> {
     let mut result: Vec<Vec<f64>> = Vec::new();
@@ -86,13 +123,22 @@ pub fn scale(a: Vec<Vec<f64>>, b: f64) -> Vec<Vec<f64>> {
     result
 }
 
-/// Transposes a matrix
+/// Gets the transpose of a matrix
 /// # Example
+/// ## Code
 /// ```rust
 /// use linear_algebra::matrices::functions::transpose;
-/// let a = vec![vec![1.0, 2.0], vec![3.0, 4.0]];
-/// let result = transpose(a);
-/// println!("{:?}", result); // [[1.0, 3.0], [2.0, 4.0]]
+///
+/// fn main() {
+///     let a = vec![vec![1.0, 2.0], vec![3.0, 4.0]];
+///     let result = transpose(a);
+///     println!("{:?}", result);
+/// }
+/// ```
+/// ## Terminal
+/// ```bash
+/// $ cargo run
+/// [[1.0, 3.0], [2.0, 4.0]]
 /// ```
 pub fn transpose(a: Vec<Vec<f64>>) -> Vec<Vec<f64>> {
     let mut result: Vec<Vec<f64>> = Vec::new();
@@ -108,10 +154,19 @@ pub fn transpose(a: Vec<Vec<f64>>) -> Vec<Vec<f64>> {
 
 /// Creates an identity matrix of a given size
 /// # Example
+/// ## Code
 /// ```rust
 /// use linear_algebra::matrices::functions::identity;
-/// let result = identity(3);
-/// println!("{:?}", result); // [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]
+///
+/// fn main() {
+///     let result = identity(3);
+///     println!("{:?}", result);
+/// }
+/// ```
+/// ## Terminal
+/// ```bash
+/// $ cargo run
+/// [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]
 /// ```
 pub fn identity(size: usize) -> Vec<Vec<f64>> {
     let mut result: Vec<Vec<f64>> = Vec::new();
@@ -131,11 +186,20 @@ pub fn identity(size: usize) -> Vec<Vec<f64>> {
 
 /// Calculates the determinant of a square matrix
 /// # Example
+/// ## Code
 /// ```rust
 /// use linear_algebra::matrices::functions::determinant;
-/// let a = vec![vec![1.0, 2.0], vec![3.0, 4.0]];
-/// let result = determinant(a);
-/// println!("{:?}", result); // -2.0
+///
+/// fn main() {
+///     let a = vec![vec![1.0, 2.0], vec![3.0, 4.0]];
+///     let result = determinant(a);
+///     println!("{:?}", result);
+/// }
+/// ```
+/// ## Terminal
+/// ```bash
+/// $ cargo run
+/// -2.0
 /// ```
 pub fn determinant(a: Vec<Vec<f64>>) -> f64 {
     if a.len() == 2 {

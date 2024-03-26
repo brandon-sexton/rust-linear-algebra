@@ -1,4 +1,6 @@
-//! A module for matrix math
+//! Top-level module for general matrix operations
+
+pub mod functions;
 use super::vectors::CartesianVector;
 
 /// A struct representing a 3x3 matrix in Cartesian space
@@ -11,13 +13,17 @@ pub struct CartesianMatrix {
 impl CartesianMatrix {
     /// Creates a new CartesianMatrix
     /// # Example
+    /// ## Code
     /// ```rust
     /// use linear_algebra::matrices::CartesianMatrix;
     /// use linear_algebra::vectors::CartesianVector;
-    /// let row_1 = CartesianVector::new(1.0, 2.0, 3.0);
-    /// let row_2 = CartesianVector::new(4.0, 5.0, 6.0);
-    /// let row_3 = CartesianVector::new(7.0, 8.0, 9.0);
-    /// let matrix = CartesianMatrix::new(row_1, row_2, row_3);
+    ///
+    /// fn main() {
+    ///     let row_1 = CartesianVector::new(1.0, 2.0, 3.0);
+    ///     let row_2 = CartesianVector::new(4.0, 5.0, 6.0);
+    ///     let row_3 = CartesianVector::new(7.0, 8.0, 9.0);
+    ///     let matrix = CartesianMatrix::new(row_1, row_2, row_3);
+    /// }
     /// ```
     pub fn new(
         row_1: CartesianVector,
@@ -33,18 +39,22 @@ impl CartesianMatrix {
 
     /// Adds two CartesianMatrices
     /// # Example
+    /// ## Code
     /// ```rust
     /// use linear_algebra::matrices::CartesianMatrix;
     /// use linear_algebra::vectors::CartesianVector;
-    /// let row_1_a = CartesianVector::new(1.0, 2.0, 3.0);
-    /// let row_2_a = CartesianVector::new(4.0, 5.0, 6.0);
-    /// let row_3_a = CartesianVector::new(7.0, 8.0, 9.0);
-    /// let matrix_a = CartesianMatrix::new(row_1_a, row_2_a, row_3_a);
-    /// let row_1_b = CartesianVector::new(9.0, 8.0, 7.0);
-    /// let row_2_b = CartesianVector::new(6.0, 5.0, 4.0);
-    /// let row_3_b = CartesianVector::new(3.0, 2.0, 1.0);
-    /// let matrix_b = CartesianMatrix::new(row_1_b, row_2_b, row_3_b);
-    /// let result = matrix_a.plus(matrix_b);
+    ///
+    /// fn main() {
+    ///     let row_1_a = CartesianVector::new(1.0, 2.0, 3.0);
+    ///     let row_2_a = CartesianVector::new(4.0, 5.0, 6.0);
+    ///     let row_3_a = CartesianVector::new(7.0, 8.0, 9.0);
+    ///     let matrix_a = CartesianMatrix::new(row_1_a, row_2_a, row_3_a);
+    ///     let row_1_b = CartesianVector::new(9.0, 8.0, 7.0);
+    ///     let row_2_b = CartesianVector::new(6.0, 5.0, 4.0);
+    ///     let row_3_b = CartesianVector::new(3.0, 2.0, 1.0);
+    ///     let matrix_b = CartesianMatrix::new(row_1_b, row_2_b, row_3_b);
+    ///     let result = matrix_a.plus(matrix_b);
+    /// }
     /// ```
     pub fn plus(&self, other: CartesianMatrix) -> CartesianMatrix {
         CartesianMatrix {
@@ -56,18 +66,22 @@ impl CartesianMatrix {
 
     /// Subtracts two CartesianMatrices
     /// # Example
+    /// ## Code
     /// ```rust
     /// use linear_algebra::matrices::CartesianMatrix;
     /// use linear_algebra::vectors::CartesianVector;
-    /// let row_1_a = CartesianVector::new(1.0, 2.0, 3.0);
-    /// let row_2_a = CartesianVector::new(4.0, 5.0, 6.0);
-    /// let row_3_a = CartesianVector::new(7.0, 8.0, 9.0);
-    /// let matrix_a = CartesianMatrix::new(row_1_a, row_2_a, row_3_a);
-    /// let row_1_b = CartesianVector::new(9.0, 8.0, 7.0);
-    /// let row_2_b = CartesianVector::new(6.0, 5.0, 4.0);
-    /// let row_3_b = CartesianVector::new(3.0, 2.0, 1.0);
-    /// let matrix_b = CartesianMatrix::new(row_1_b, row_2_b, row_3_b);
-    /// let result = matrix_a.minus(matrix_b);
+    ///
+    /// fn main() {
+    ///     let row_1_a = CartesianVector::new(1.0, 2.0, 3.0);
+    ///     let row_2_a = CartesianVector::new(4.0, 5.0, 6.0);
+    ///     let row_3_a = CartesianVector::new(7.0, 8.0, 9.0);
+    ///     let matrix_a = CartesianMatrix::new(row_1_a, row_2_a, row_3_a);
+    ///     let row_1_b = CartesianVector::new(9.0, 8.0, 7.0);
+    ///     let row_2_b = CartesianVector::new(6.0, 5.0, 4.0);
+    ///     let row_3_b = CartesianVector::new(3.0, 2.0, 1.0);
+    ///     let matrix_b = CartesianMatrix::new(row_1_b, row_2_b, row_3_b);
+    ///     let result = matrix_a.minus(matrix_b);
+    /// }
     /// ```
     pub fn minus(&self, other: CartesianMatrix) -> CartesianMatrix {
         CartesianMatrix {
@@ -77,16 +91,20 @@ impl CartesianMatrix {
         }
     }
 
-    /// Scales a CartesianMatrix by a scalar
+    /// Scales a CartesianMatrix by an input multiple
     /// # Example
+    /// ## Code
     /// ```rust
     /// use linear_algebra::matrices::CartesianMatrix;
     /// use linear_algebra::vectors::CartesianVector;
-    /// let row_1 = CartesianVector::new(1.0, 2.0, 3.0);
-    /// let row_2 = CartesianVector::new(4.0, 5.0, 6.0);
-    /// let row_3 = CartesianVector::new(7.0, 8.0, 9.0);
-    /// let matrix = CartesianMatrix::new(row_1, row_2, row_3);
-    /// let result = matrix.scale(2.0);
+    ///
+    /// fn main() {
+    ///     let row_1 = CartesianVector::new(1.0, 2.0, 3.0);
+    ///     let row_2 = CartesianVector::new(4.0, 5.0, 6.0);
+    ///     let row_3 = CartesianVector::new(7.0, 8.0, 9.0);
+    ///     let matrix = CartesianMatrix::new(row_1, row_2, row_3);
+    ///     let result = matrix.scale(2.0);
+    /// }
     /// ```
     pub fn scale(&self, scalar: f64) -> CartesianMatrix {
         CartesianMatrix {
@@ -98,14 +116,18 @@ impl CartesianMatrix {
 
     /// Returns a column of a CartesianMatrix
     /// # Example
+    /// ## Code
     /// ```rust
     /// use linear_algebra::matrices::CartesianMatrix;
     /// use linear_algebra::vectors::CartesianVector;
-    /// let row_1 = CartesianVector::new(1.0, 2.0, 3.0);
-    /// let row_2 = CartesianVector::new(4.0, 5.0, 6.0);
-    /// let row_3 = CartesianVector::new(7.0, 8.0, 9.0);
-    /// let matrix = CartesianMatrix::new(row_1, row_2, row_3);
-    /// let result = matrix.column(0);
+    ///
+    /// fn main() {
+    ///     let row_1 = CartesianVector::new(1.0, 2.0, 3.0);
+    ///     let row_2 = CartesianVector::new(4.0, 5.0, 6.0);
+    ///     let row_3 = CartesianVector::new(7.0, 8.0, 9.0);
+    ///     let matrix = CartesianMatrix::new(row_1, row_2, row_3);
+    ///     let result = matrix.column(0);
+    /// }
     /// ```
     pub fn column(&self, index: usize) -> CartesianVector {
         match index {
@@ -118,14 +140,18 @@ impl CartesianMatrix {
 
     /// Returns the first row of the calling CartesianMatrix
     /// # Example
+    /// ## Code
     /// ```rust
     /// use linear_algebra::matrices::CartesianMatrix;
     /// use linear_algebra::vectors::CartesianVector;
-    /// let row_1 = CartesianVector::new(1.0, 2.0, 3.0);
-    /// let row_2 = CartesianVector::new(4.0, 5.0, 6.0);
-    /// let row_3 = CartesianVector::new(7.0, 8.0, 9.0);
-    /// let matrix = CartesianMatrix::new(row_1, row_2, row_3);
-    /// let result = matrix.row_1();
+    ///
+    /// fn main() {
+    ///     let row_1 = CartesianVector::new(1.0, 2.0, 3.0);
+    ///     let row_2 = CartesianVector::new(4.0, 5.0, 6.0);
+    ///     let row_3 = CartesianVector::new(7.0, 8.0, 9.0);
+    ///     let matrix = CartesianMatrix::new(row_1, row_2, row_3);
+    ///     let result = matrix.row_1();
+    /// }
     /// ```
     pub fn row_1(&self) -> CartesianVector {
         self.row_1
@@ -133,14 +159,18 @@ impl CartesianMatrix {
 
     /// Returns the second row of the calling CartesianMatrix
     /// # Example
+    /// ## Code
     /// ```rust
     /// use linear_algebra::matrices::CartesianMatrix;
     /// use linear_algebra::vectors::CartesianVector;
-    /// let row_1 = CartesianVector::new(1.0, 2.0, 3.0);
-    /// let row_2 = CartesianVector::new(4.0, 5.0, 6.0);
-    /// let row_3 = CartesianVector::new(7.0, 8.0, 9.0);
-    /// let matrix = CartesianMatrix::new(row_1, row_2, row_3);
-    /// let result = matrix.row_2();
+    ///
+    /// fn main() {
+    ///     let row_1 = CartesianVector::new(1.0, 2.0, 3.0);
+    ///     let row_2 = CartesianVector::new(4.0, 5.0, 6.0);
+    ///     let row_3 = CartesianVector::new(7.0, 8.0, 9.0);
+    ///     let matrix = CartesianMatrix::new(row_1, row_2, row_3);
+    ///     let result = matrix.row_2();
+    /// }
     /// ```
     pub fn row_2(&self) -> CartesianVector {
         self.row_2
@@ -148,14 +178,18 @@ impl CartesianMatrix {
 
     /// Returns the third row of the calling CartesianMatrix
     /// # Example
+    /// ## Code
     /// ```rust
     /// use linear_algebra::matrices::CartesianMatrix;
     /// use linear_algebra::vectors::CartesianVector;
-    /// let row_1 = CartesianVector::new(1.0, 2.0, 3.0);
-    /// let row_2 = CartesianVector::new(4.0, 5.0, 6.0);
-    /// let row_3 = CartesianVector::new(7.0, 8.0, 9.0);
-    /// let matrix = CartesianMatrix::new(row_1, row_2, row_3);
-    /// let result = matrix.row_3();
+    ///
+    /// fn main() {
+    ///     let row_1 = CartesianVector::new(1.0, 2.0, 3.0);
+    ///     let row_2 = CartesianVector::new(4.0, 5.0, 6.0);
+    ///     let row_3 = CartesianVector::new(7.0, 8.0, 9.0);
+    ///     let matrix = CartesianMatrix::new(row_1, row_2, row_3);
+    ///     let result = matrix.row_3();
+    /// }
     /// ```
     pub fn row_3(&self) -> CartesianVector {
         self.row_3
@@ -163,14 +197,18 @@ impl CartesianMatrix {
 
     /// Returns the first column of the calling CartesianMatrix
     /// # Example
+    /// ## Code
     /// ```rust
     /// use linear_algebra::matrices::CartesianMatrix;
     /// use linear_algebra::vectors::CartesianVector;
-    /// let row_1 = CartesianVector::new(1.0, 2.0, 3.0);
-    /// let row_2 = CartesianVector::new(4.0, 5.0, 6.0);
-    /// let row_3 = CartesianVector::new(7.0, 8.0, 9.0);
-    /// let matrix = CartesianMatrix::new(row_1, row_2, row_3);
-    /// let result = matrix.column_1();
+    ///
+    /// fn main() {
+    ///     let row_1 = CartesianVector::new(1.0, 2.0, 3.0);
+    ///     let row_2 = CartesianVector::new(4.0, 5.0, 6.0);
+    ///     let row_3 = CartesianVector::new(7.0, 8.0, 9.0);
+    ///     let matrix = CartesianMatrix::new(row_1, row_2, row_3);
+    ///     let result = matrix.column_1();
+    /// }
     /// ```
     pub fn column_1(&self) -> CartesianVector {
         self.column(0)
@@ -178,14 +216,18 @@ impl CartesianMatrix {
 
     /// Returns the second column of the calling CartesianMatrix
     /// # Example
+    /// ## Code
     /// ```rust
     /// use linear_algebra::matrices::CartesianMatrix;
     /// use linear_algebra::vectors::CartesianVector;
-    /// let row_1 = CartesianVector::new(1.0, 2.0, 3.0);
-    /// let row_2 = CartesianVector::new(4.0, 5.0, 6.0);
-    /// let row_3 = CartesianVector::new(7.0, 8.0, 9.0);
-    /// let matrix = CartesianMatrix::new(row_1, row_2, row_3);
-    /// let result = matrix.column_2();
+    ///
+    /// fn main() {
+    ///     let row_1 = CartesianVector::new(1.0, 2.0, 3.0);
+    ///     let row_2 = CartesianVector::new(4.0, 5.0, 6.0);
+    ///     let row_3 = CartesianVector::new(7.0, 8.0, 9.0);
+    ///     let matrix = CartesianMatrix::new(row_1, row_2, row_3);
+    ///     let result = matrix.column_2();
+    /// }
     /// ```
     pub fn column_2(&self) -> CartesianVector {
         self.column(1)
@@ -193,14 +235,18 @@ impl CartesianMatrix {
 
     /// Returns the third column of the calling CartesianMatrix
     /// # Example
+    /// ## Code
     /// ```rust
     /// use linear_algebra::matrices::CartesianMatrix;
     /// use linear_algebra::vectors::CartesianVector;
-    /// let row_1 = CartesianVector::new(1.0, 2.0, 3.0);
-    /// let row_2 = CartesianVector::new(4.0, 5.0, 6.0);
-    /// let row_3 = CartesianVector::new(7.0, 8.0, 9.0);
-    /// let matrix = CartesianMatrix::new(row_1, row_2, row_3);
-    /// let result = matrix.column_3();
+    ///
+    /// fn main() {
+    ///     let row_1 = CartesianVector::new(1.0, 2.0, 3.0);
+    ///     let row_2 = CartesianVector::new(4.0, 5.0, 6.0);
+    ///     let row_3 = CartesianVector::new(7.0, 8.0, 9.0);
+    ///     let matrix = CartesianMatrix::new(row_1, row_2, row_3);
+    ///     let result = matrix.column_3();
+    /// }
     /// ```
     pub fn column_3(&self) -> CartesianVector {
         self.column(2)
@@ -208,14 +254,18 @@ impl CartesianMatrix {
 
     /// Returns the determinant of the calling CartesianMatrix
     /// # Example
+    /// ## Code
     /// ```rust
     /// use linear_algebra::matrices::CartesianMatrix;
     /// use linear_algebra::vectors::CartesianVector;
-    /// let row_1 = CartesianVector::new(1.0, 2.0, 3.0);
-    /// let row_2 = CartesianVector::new(4.0, 5.0, 6.0);
-    /// let row_3 = CartesianVector::new(7.0, 8.0, 9.0);
-    /// let matrix = CartesianMatrix::new(row_1, row_2, row_3);
-    /// let result = matrix.determinant();
+    ///
+    /// fn main() {
+    ///     let row_1 = CartesianVector::new(1.0, 2.0, 3.0);
+    ///     let row_2 = CartesianVector::new(4.0, 5.0, 6.0);
+    ///     let row_3 = CartesianVector::new(7.0, 8.0, 9.0);
+    ///     let matrix = CartesianMatrix::new(row_1, row_2, row_3);
+    ///     let result = matrix.determinant();
+    /// }
     /// ```
     pub fn determinant(&self) -> f64 {
         self.row_1.x() * (self.row_2.y() * self.row_3.z() - self.row_2.z() * self.row_3.y())
@@ -225,14 +275,18 @@ impl CartesianMatrix {
 
     /// Returns the transpose of the calling CartesianMatrix
     /// # Example
+    /// ## Code
     /// ```rust
     /// use linear_algebra::matrices::CartesianMatrix;
     /// use linear_algebra::vectors::CartesianVector;
-    /// let row_1 = CartesianVector::new(1.0, 2.0, 3.0);
-    /// let row_2 = CartesianVector::new(4.0, 5.0, 6.0);
-    /// let row_3 = CartesianVector::new(7.0, 8.0, 9.0);
-    /// let matrix = CartesianMatrix::new(row_1, row_2, row_3);
-    /// let result = matrix.transpose();
+    ///
+    /// fn main() {
+    ///     let row_1 = CartesianVector::new(1.0, 2.0, 3.0);
+    ///     let row_2 = CartesianVector::new(4.0, 5.0, 6.0);
+    ///     let row_3 = CartesianVector::new(7.0, 8.0, 9.0);
+    ///     let matrix = CartesianMatrix::new(row_1, row_2, row_3);
+    ///     let result = matrix.transpose();
+    /// }
     /// ```
     pub fn transpose(&self) -> CartesianMatrix {
         CartesianMatrix {
@@ -244,18 +298,22 @@ impl CartesianMatrix {
 
     /// Multiplies two CartesianMatrices
     /// # Example
+    /// ## Code
     /// ```rust
     /// use linear_algebra::matrices::CartesianMatrix;
     /// use linear_algebra::vectors::CartesianVector;
-    /// let row_1_a = CartesianVector::new(1.0, 2.0, 3.0);
-    /// let row_2_a = CartesianVector::new(4.0, 5.0, 6.0);
-    /// let row_3_a = CartesianVector::new(7.0, 8.0, 9.0);
-    /// let matrix_a = CartesianMatrix::new(row_1_a, row_2_a, row_3_a);
-    /// let row_1_b = CartesianVector::new(9.0, 8.0, 7.0);
-    /// let row_2_b = CartesianVector::new(6.0, 5.0, 4.0);
-    /// let row_3_b = CartesianVector::new(3.0, 2.0, 1.0);
-    /// let matrix_b = CartesianMatrix::new(row_1_b, row_2_b, row_3_b);
-    /// let result = matrix_a.multiply_matrix(matrix_b);
+    ///
+    /// fn main() {
+    ///     let row_1_a = CartesianVector::new(1.0, 2.0, 3.0);
+    ///     let row_2_a = CartesianVector::new(4.0, 5.0, 6.0);
+    ///     let row_3_a = CartesianVector::new(7.0, 8.0, 9.0);
+    ///     let matrix_a = CartesianMatrix::new(row_1_a, row_2_a, row_3_a);
+    ///     let row_1_b = CartesianVector::new(9.0, 8.0, 7.0);
+    ///     let row_2_b = CartesianVector::new(6.0, 5.0, 4.0);
+    ///     let row_3_b = CartesianVector::new(3.0, 2.0, 1.0);
+    ///     let matrix_b = CartesianMatrix::new(row_1_b, row_2_b, row_3_b);
+    ///     let result = matrix_a.multiply_matrix(matrix_b);
+    /// }
     /// ```
     pub fn multiply_matrix(&self, other: CartesianMatrix) -> CartesianMatrix {
         CartesianMatrix {
@@ -279,15 +337,19 @@ impl CartesianMatrix {
 
     /// Multiplies a CartesianMatrix by a CartesianVector
     /// # Example
+    /// ## Code
     /// ```rust
     /// use linear_algebra::matrices::CartesianMatrix;
     /// use linear_algebra::vectors::CartesianVector;
-    /// let row_1 = CartesianVector::new(1.0, 2.0, 3.0);
-    /// let row_2 = CartesianVector::new(4.0, 5.0, 6.0);
-    /// let row_3 = CartesianVector::new(7.0, 8.0, 9.0);
-    /// let matrix = CartesianMatrix::new(row_1, row_2, row_3);
-    /// let vector = CartesianVector::new(1.0, 2.0, 3.0);
-    /// let result = matrix.multiply_vector(vector);
+    ///
+    /// fn main() {
+    ///     let row_1 = CartesianVector::new(1.0, 2.0, 3.0);
+    ///     let row_2 = CartesianVector::new(4.0, 5.0, 6.0);
+    ///     let row_3 = CartesianVector::new(7.0, 8.0, 9.0);
+    ///     let matrix = CartesianMatrix::new(row_1, row_2, row_3);
+    ///     let vector = CartesianVector::new(1.0, 2.0, 3.0);
+    ///     let result = matrix.multiply_vector(vector);
+    /// }
     /// ```
     pub fn multiply_vector(&self, other: CartesianVector) -> CartesianVector {
         CartesianVector::new(
