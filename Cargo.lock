@@ -10,7 +10,7 @@ checksum = "3c07dab4369547dbe5114677b33fbbf724971019f3818172d59a97a61c774ffd"
 
 [[package]]
 name = "linear_algebra"
-version = "1.0.3"
+version = "2.0.0"
 dependencies = [
  "assert_approx_eq",
 ]
